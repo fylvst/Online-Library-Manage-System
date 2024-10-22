@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.mapper.BookMapper">
+    <!--<select id="getAvailByBid" resultType="int">
+        select available from library.book where bid=#{bid}
+    </select>-->
+    <update id="updateAvailByBid">
+        update
+            library.book
+        set
+            available=available+#{value},
+            update_time=current_timestamp
+        where bid=#{bid}
+    </update>
+    <select id="getBookNums" resultType="int">
+        select count(bid) from library.book where is_delete!=1
+    </select>
+</mapper>

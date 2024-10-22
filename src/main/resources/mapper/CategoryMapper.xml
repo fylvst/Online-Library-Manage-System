@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.mapper.CategoryMapper">
+    <update id="deleteByCid" >
+        update
+            library.category
+        set
+            is_delete=1,
+            update_time=CURRENT_TIMESTAMP
+        where cid=#{cid}
+    </update>
+
+    <select id="getAllCate" resultType="category">
+        select cid,cate_name
+        from library.category
+        where  is_delete=0
+        order by cate_name
+    </select>
+</mapper>

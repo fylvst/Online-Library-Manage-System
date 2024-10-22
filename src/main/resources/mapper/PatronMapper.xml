@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.mapper.PatronMapper">
+    <resultMap id="PatronMap" type="patron">
+        <id column="pid" property="pid"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <insert id="insertPatron">
+        insert into
+            library.patron( username, password, nickname, age, phone, email, create_time, update_time)
+        values
+            (#{username},#{password},#{nickname},#{age},#{phone},#{email},#{createTime},#{updateTime})
+    </insert>
+    <select id="findByUsername" resultMap="PatronMap">
+        select
+            *
+        from
+            library.patron
+        where
+            username=#{username}
+    </select>
+    <select id="findByPid" resultMap="PatronMap">
+        select
+            *
+        from
+            library.patron
+        where
+            pid=#{pid}
+    </select>
+    <update id="updateInfoByUid">
+        update
+            library.patron
+        set
+            <if test="nickname != null">nickname=#{nickname},</if>
+            <if test="age != null">age=#{age},</if>
+            <if test="phone!=null">phone=#{phone},</if>
+            <if test="email!=null">email=#{email},</if>
+            update_time=#{updateTime}
+        where
+            pid=#{pid}
+    </update>
+    <select id="listAll" resultMap="PatronMap">
+        select
+            pid,username,nickname, age, phone, email
+        from
+            library.patron
+        where is_delete=0
+    </select>
+    <update id="deleteByPid">
+        update
+            library.patron
+        set
+            is_delete=1
+        where
+            pid=#{pid}
+    </update>
+</mapper>

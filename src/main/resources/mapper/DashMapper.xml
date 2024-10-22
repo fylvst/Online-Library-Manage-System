@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.library.mapper.DashMapper">
+    <select id="getDash" resultType="dashboard">
+        select * from library.dashboard
+    </select>
+    <update id="updateMoney">
+        update library.dashboard
+        set money=money+#{money}
+    </update>
+    <update id="update">
+        update library.dashboard
+        set patron_num=(select count(pid) from library.patron),
+            staff_num=(select count(sid) from library.staff),
+            book_num=(select sum(nums) from library.book),
+            book_avail=(select sum(available) from library.book)
+    </update>
+</mapper>
